@@ -4,6 +4,7 @@ import Element exposing (..)
 import Element.Input as Input
 import Html exposing (Html)
 import Types exposing (..)
+import Views.Customs.Counter as Counter
 
 
 view : Model -> Html Msg
@@ -12,19 +13,4 @@ view model =
         { options = [ focusStyle <| FocusStyle Nothing Nothing Nothing ] }
         []
     <|
-        counter model
-
-
-counter : Model -> Element Msg
-counter model =
-    row []
-        [ Input.button []
-            { onPress = Just Decrement
-            , label = text "<"
-            }
-        , text <| String.fromInt model.counter
-        , Input.button []
-            { onPress = Just Increment
-            , label = text ">"
-            }
-        ]
+        Counter.view model
