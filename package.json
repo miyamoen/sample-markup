@@ -1,0 +1,8 @@
+{
+  "name": "sample-markup",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "elm-live src/elm/Main.elm --open --pushstate --start-page=index.html --dir=public -- --output=public/elm.js"
+  }
+}
