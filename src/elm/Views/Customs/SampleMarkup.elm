@@ -5,7 +5,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input exposing (labelAbove)
-import Mark exposing (Block, Document, Text(..))
+import Mark exposing (Block, Document, Style(..), Text(..))
 import Types exposing (..)
 import Views.Customs.Counter as Counter
 
@@ -38,22 +38,47 @@ block : Block (List (Model -> Element Msg))
 block =
     Mark.manyOf
         [ counterBlock
-
-        -- , Mark.text
-        --     { view =
-        --         \(Text styles body) ->
-        --             let
-        --                 _ =
-        --                     Debug.log "styles" styles
-        --             in
-        --             body
-        --     , inlines = []
-        --     , replacements = []
-        --     }
-        --     |> Mark.map (String.join "\n")
+        , Mark.text
+            { view =
+                \(Text styles body) ->
+                    el (List.map styleToAttr styles) (text body)
+            , inlines = []
+            , replacements = []
+            }
+            |> Mark.map
+                (\lines model -> paragraph [] lines)
+        , textBlock
         ]
+
+
+styleToAttr : Style -> Attribute msg
+styleToAttr style =
+    case style of
+        Bold ->
+            Font.bold
+
+        Italic ->
+            Font.italic
+
+        Strike ->
+            Font.strike
 
 
 counterBlock : Block (Model -> Element Msg)
 counterBlock =
     Mark.stub "Counter" Counter.view
+
+
+textBlock : Block (Model -> Element Msg)
+textBlock =
+    Mark.block "Text" (\paras model -> textColumn [ Border.width 1, padding 8 ] paras) <|
+        Mark.manyOf
+            [ Mark.text
+                { view =
+                    \(Text styles body) ->
+                        el (List.map styleToAttr styles) (text body)
+                , inlines = []
+                , replacements = []
+                }
+                |> Mark.map (paragraph [ Border.width 1, padding 8 ])
+            ]
