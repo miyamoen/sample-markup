@@ -7,7 +7,7 @@ import View exposing (view)
 
 init : () -> ( Model, Cmd Msg )
 init () =
-    ( { counter = 0 }, Cmd.none )
+    ( { counter = 0, input = "test" }, Cmd.none )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -18,6 +18,9 @@ update msg model =
 
         Decrement ->
             ( { model | counter = model.counter - 1 }, Cmd.none )
+
+        SetInput new ->
+            ( { model | input = new }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg

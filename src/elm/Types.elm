@@ -8,9 +8,10 @@ module Types exposing (Model, Msg(..))
 
 
 type alias Model =
-    { counter : Int }
+    { counter : Int, input : String }
 
 
 type Msg
     = Increment
     | Decrement
+    | SetInput String
